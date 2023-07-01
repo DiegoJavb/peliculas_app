@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_app/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
@@ -16,6 +17,12 @@ class DetailsScreen extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 const _PosterAndTitle(),
+                const _Overview(),
+                const _Overview(),
+                const _Overview(),
+                const _Overview(),
+                const _Overview(),
+                const CastingCards()
               ],
             ),
           )
@@ -41,6 +48,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
+          padding: EdgeInsets.only(bottom: 10),
           color: Colors.black45,
           child: const Text(
             'movie.title',
@@ -49,7 +57,7 @@ class _CustomAppBar extends StatelessWidget {
         ),
         background: const FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/500x300'),
+          image: NetworkImage('https://picsum.photos/id/237/200/300'),
           fit: BoxFit.cover,
         ),
       ),
@@ -72,7 +80,7 @@ class _PosterAndTitle extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: const FadeInImage(
               placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage('https://via.placeholder.com/200x300'),
+              image: NetworkImage('https://picsum.photos/id/237/200/300'),
               height: 150,
             ),
           ),
@@ -110,6 +118,22 @@ class _PosterAndTitle extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  const _Overview();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Text(
+        'Eu do aliqua veniam adipisicing magna adipisicing officia tempor eu consequat velit consectetur. Esse mollit dolore sit sint sit in commodo esse aute excepteur. Incididunt commodo ipsum non tempor mollit laboris et exercitation incididunt id qui commodo officia reprehenderit. Ex sit culpa do veniam dolor amet sint fugiat exercitation. Anim amet eu dolor occaecat aliqua exercitation nulla amet.',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }
