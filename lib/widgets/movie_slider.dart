@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_app/models/models.dart';
 
-class MovieSlider extends StatelessWidget {
+class MovieSlider extends StatefulWidget {
   final List<Movie> movies;
   final String? title;
+  final Function onNextpage;
 
-  const MovieSlider({super.key, required this.movies, this.title});
+  const MovieSlider({
+    super.key,
+    this.title,
+    required this.movies,
+    required this.onNextpage,
+  });
+
+  @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 500) {
+        widget.onNextpage();
+      }
+    });
+  }
+
+//
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +45,12 @@ class MovieSlider extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          title == null
+          widget.title == null
               ? const SizedBox(height: 15)
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    title!,
+                    widget.title!,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -29,11 +59,11 @@ class MovieSlider extends StatelessWidget {
                 ),
           Expanded(
             child: ListView.builder(
+              controller: scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: movies.length,
+              itemCount: widget.movies.length,
               itemBuilder: (_, int index) {
-                final movie = movies[index];
-                return _MoviePoster(movie);
+                return _MoviePoster(widget.movies[index]);
               },
             ),
           ),

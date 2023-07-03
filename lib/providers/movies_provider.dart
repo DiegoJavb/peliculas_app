@@ -11,7 +11,6 @@ class MoviesProvider extends ChangeNotifier {
   List<Movie> popularMovies = [];
   int _popularPage = 0;
   MoviesProvider() {
-    print('Movies provider inicializado');
     getOnDisplayMovies();
     getPopularMovies();
   }
@@ -37,7 +36,6 @@ class MoviesProvider extends ChangeNotifier {
     final String jsonData = await _getJsonData('3/movie/popular', _popularPage);
     final popularResponse = PopularResponse.fromRawJson(jsonData);
     popularMovies = [...popularMovies, ...popularResponse.results];
-    print(popularMovies[0]);
     notifyListeners();
   }
 }
