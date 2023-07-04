@@ -30,7 +30,7 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('data');
+    return const Text('data');
   }
 
   Widget _emptyContainer() {
@@ -48,9 +48,11 @@ class MovieSearchDelegate extends SearchDelegate {
     if (query.isEmpty) {
       return _emptyContainer();
     }
+
     final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
-    return FutureBuilder(
-      future: moviesProvider.searchMovie(query),
+    moviesProvider.getSuggestionsByQuery(query);
+    return StreamBuilder(
+      stream: moviesProvider.suggestionStream,
       builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
         final movies = snapshot.data;
         if (!snapshot.hasData) return _emptyContainer();
